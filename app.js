@@ -4,26 +4,12 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var passport = require('passport-twitter')
-var config = require('./config.json');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
-var twitter = require('./routes/twitter_auth');
+// var twitter = require('./routes/twitter_auth');
 
 var app = express();
-
-passport.use(new TwitterStrategy({
-    consumerKey: config.TWITTER_CONSUMER_KEY,
-    consumerSecret: config.TWITTER_CONSUMER_SECRET,
-    callbackURL: "http://www.hacktiv8.com"
-  },
-  function(token, tokenSecret, profile, cb) {
-    User.findOrCreate({ twitterId: profile.id }, function (err, user) {
-      return cb(err, user);
-    });
-  }
-));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -39,7 +25,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/users', users);
-app.use('/auth/twitter', twitter);
+// app.use('/auth/twitter', twitter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
