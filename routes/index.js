@@ -14,7 +14,7 @@ var client = new Twitter({
 router.get('/search', function(req,res){
   const search_query = req.query.q
   client.get('search/tweets', {q: search_query}, function(error, tweets, response) {
-     res.send(response);
+     res.send(tweets);
   });
 })
 
